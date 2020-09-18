@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'info.solidsoft.pitest' version '1.5.2'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile "junit:junit:4.13"
+    testImplementation "org.assertj:assertj-core:3.15.0"
+}
+
+
+pitest {
+    testSourceSets.set([sourceSets.test])
+    mainSourceSets.set([sourceSets.main])
+    junit5PluginVersion = '0.12'
+    outputFormats = ['HTML'] // XML is also available
+    mutators = ["ROR", "RETURN_VALS", "INVERT_NEGS", "MATH", "VOID_METHOD_CALLS", "NON_VOID_METHOD_CALLS"]
+    avoidCallsTo = ["java.util", "java.lang"]
+    // optional
+    threads = 4
+    timestampedReports = false
+}
